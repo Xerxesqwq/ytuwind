@@ -15,6 +15,12 @@ def SendSQL(sql):
     # for row in results:
     cursor.close()
     return results
+def RegisteredUsers(username,password,realname,studentnum,college,major,headimageurl,phonenum,classnum):
+    sql = "INSERT INTO `ytuwind`.`yw_users`(`username`, `password`, `realname`, `studentsnum`, `college`, `major`, `headimageurl`, `phonenum`, `classnum`) " \
+          "VALUES ("+username+", '"+password+"', '"+realname+"', '"+studentnum+"', '"+college+"', '"+major+"', '"+headimageurl+"', '"+phonenum+"', "+classnum+")"
+
+    return id
+
 
 @app.route('/')
 @app.route('/index')
@@ -26,6 +32,8 @@ def UserId(id):
     sql = "SELECT * FROM `ytuwind`.`yw_users` WHERE `id` = '"+str(id)+"'"
     user_data = SendSQL(sql)
     print(user_data)
+
+
 
     return render_template('user.html',**locals())
 
