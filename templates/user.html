@@ -1,10 +1,9 @@
 {% extends "base.html" %}
-
-
 {% block conntent %}
+
 <div class="hui-wrap">
     <div class="hui-list" style="background:#FFFFFF; margin-top:28px;">
-        <a href="javascript:hui.toast('Hello Hcoder UI !');" style="height:auto; height:80px; padding-bottom:8px;">
+        <a href="javascript:hui.toast('修改信息');" style="height:auto; height:80px; padding-bottom:8px;">
     		<div class="hui-list-icons" style="width:110px; height:80px;">
     			<img src="{{url_for('static',filename=user_data[7])}}" style="width:66px; margin:0px; border-radius:50%;">
     		</div>
@@ -17,9 +16,9 @@
     			</div>
     		</div>
     	</a>
-    	<a href="javascript:hui.toast('Hello Hcoder UI !');">
+    	<a href="javascript:hui.toast('个人信息');">
     		<div class="hui-list-text">
-    			<i>姓名：{{user_data[3]}}</i>  | <i>学号 : {{user_data[4]}}</i>
+    			<i>姓名：{{user_data[3]}}</i>|<i>学号 : {{user_data[4]}}</i>
     		</div>
     	</a>
     </div>

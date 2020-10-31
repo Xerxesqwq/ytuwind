@@ -9,17 +9,15 @@ app = Flask(__name__)
 
 # 打开数据库连接
 db = pymysql.connect("localhost", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
-def SetCookie(cookiename,cookietext,alivetime):
-
-    response = Response('Set Cookie')
-
-    response.set_cookie(cookiename, cookietext)  # set_cookie视图会在生成的响应报文首部中创建一个Set-Cookie字段,即"Set-Cookie: name=xxx;Path=/"
+def SetCookie(fun,cookiename,cookietext,alivetime):
+    response = redirect(url_for(fun))
+    response.set_cookie(cookiename, cookietext,max_age=alivetime)  # set_cookie视图会在生成的响应报文首部中创建一个Set-Cookie字段,即"Set-Cookie: name=xxx;Path=/"
     return response
 def GetCookie(cookiename):
     cookie_1 = request.cookies.get(cookiename)  # 获取名字为cookiename对应cookie的值
     return cookie_1
-def DeleteCookie(cookiename):
-    resp = Response("delete cookie")
+def DeleteCookie(fun,cookiename):
+    resp = redirect(url_for(fun))
     resp.delete_cookie(cookiename)
     return resp
 
@@ -160,9 +158,11 @@ def UserId(id):
 @app.route('/function/<function>')
 def softfunction(function):
     if function == 'exitlogin':
-        DeleteCookie('userid')
-        DeleteCookie('username')
-        return redirect(url_for('user_login'))
+
+        response = redirect(url_for('user_login'))
+        response.delete_cookie('userid')
+        response.delete_cookie('username')
+        return response
 
 if __name__ == '__main__':
     app.run(host="10.22.231.66")
