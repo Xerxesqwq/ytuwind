@@ -45,9 +45,10 @@ def RegisteredUsers(username,password,realname,studentnum,college,major,headimag
     sql = "INSERT INTO `ytuwind`.`yw_users`(`username`, `password`, `realname`, `studentsnum`, `college`, `major`, `headimageurl`, `phonenum`, `classnum`) " \
           "VALUES ("+username+", '"+password+"', '"+realname+"', '"+studentnum+"', '"+college+"', '"+major+"', '"+headimageurl+"', '"+phonenum+"', "+classnum+")"
     res = SendSQL(sql)
+    id = SendSQL("SELECT * FROM `ytuwind`.`yw_users` WHERE `username` = '1111' ")
     if res == 1:
         print("注册成功")
-        return id
+        return idhjm
     if res == -1:
         print("注册失败")
         return -1
@@ -62,7 +63,8 @@ def IfLogin():
         return False
     else:
         return True
-
+def RFG(name):#request.form.get
+    return request.form.get(name)
 @app.route('/')
 @app.route('/index')
 def index():
@@ -72,12 +74,29 @@ def index():
     return render_template('index.html',**locals())
 @app.route('/register',methods=['POST','GET'])
 def user_register():
+    if request.method=='POST':
+        username = RFG('username')
+        password = RFG('password')
+        #messagetext
+        realname = RFG('realname')
+        studentnum = RFG('studentnum')
+        college =RFG('college')
+        major= RFG('major')
+        headimageurl = url_for('static',filename = "img/default.jpg")
+        phonenum = RFG('phonenum')
+        classnum = RFG('classnum')
+
+        userid = RegisteredUsers(username,password,realname,studentnum,college,major,headimageurl,phonenum,classnum)
+        if userid == -1:
+            messagetext = "注册失败，请尝试重新注册，如果不行，请及时联系管理员"
     return render_template('register.html', **locals())
 @app.route('/login',methods=['POST','GET'])
 def user_login():
     userid = request.cookies.get("userid")
     if userid==None:#未登录
         return render_template('login.html',**locals())
+    else:#已登录
+        return render_template('index.html',**locals())
 
 @app.route('/user/<int:id>')
 def UserId(id):
