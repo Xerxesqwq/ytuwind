@@ -2,20 +2,26 @@
 
 
 {% block conntent %}
+    {% include "top.html" %}
     {% include "notice.html" %}
     <div class="hui-speed-dial">
 		<ul>
             <li>
+                <a href="/lostandfound">
                 <div class="hui-speed-dial-icons">
                     <span class="hui-icons"><img style="height:40px;" src="{{url_for('static',filename='img/default_app.jpg')}}"></span>
                 </div>
-                <div class="hui-speed-dial-text">失物招领</div>
+                    <div class="hui-speed-dial-text">失物招领</div>
+                </a>
+
             </li>
             <li>
+                <a href="">
                 <div class="hui-speed-dial-icons">
                     <span class="hui-icons"><img  style="height:40px;" src="{{url_for('static',filename='img/default_app.jpg')}}"></span>
                 </div>
                 <div class="hui-speed-dial-text">悬赏大厅</div>
+                </a>
             </li>
             <li>
                 <div class="hui-speed-dial-icons">

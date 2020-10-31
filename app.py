@@ -1,8 +1,7 @@
 from flask import Flask,render_template,request,make_response,redirect,url_for,Response
 import pymysql
-
-host = 'localhost'
-port = 5000
+import os
+import platform
 
 app = Flask(__name__)
 
@@ -162,6 +161,18 @@ def softfunction(function):
         response.delete_cookie('userid')
         response.delete_cookie('username')
         return response
+@app.route('/lostandfound')
+def lostandfound():
+    title = "失物招领中心"
+    return render_template('lostandfound.html',**locals())
 
 if __name__ == '__main__':
-    app.run(host=host, port=port)
+    sysstr = platform.system()
+    if (sysstr == "Windows"):
+        app.debug = True
+    elif (sysstr == "Linux"):
+        app.debug = False
+    if (app.debug == True):
+        app.run('127.0.0.1',port=8000)
+    else:
+        app.run('0.0.0.0', port=80)
