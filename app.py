@@ -1,5 +1,5 @@
 import flask
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,make_response,redirect,url_for
 import os
 import urllib3
 import requests
@@ -8,6 +8,19 @@ app = Flask(__name__)
 
 # 打开数据库连接
 db = pymysql.connect("localhost", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
+def SetCookie(cookiename,cookietext,alivetime):
+    if alivetime == None :
+        alivetime = 3600
+    resp = make_response("set cookie success")  # 设置响应体
+    resp.set_cookie(cookiename, cookietext, max_age=alivetime)
+    return resp
+def GetCookie(cookiename):
+    cookie_1 = request.cookies.get(cookiename)  # 获取名字为cookiename对应cookie的值
+    return cookie_1
+def DeleteCookie(cookiename):
+    resp = make_response("delete cookie success")
+    resp.delete_cookie(cookiename)
+    return resp
 
 '''
 方法名：SendSQL()
@@ -39,18 +52,37 @@ def RegisteredUsers(username,password,realname,studentnum,college,major,headimag
         print("注册失败")
         return -1
 
-
-
+'''
+判断是否为登录状态
+'''
+def IfLogin():
+    #print(request.cookies.get('user_name'))
+    if request.cookies.get('userid') == None:
+        print("未登陆，请先登录")
+        return False
+    else:
+        return True
 
 @app.route('/')
 @app.route('/index')
-def hello_world():
+def index():
+    if IfLogin() == False:
+        return redirect(url_for('user_login'))
+
     return render_template('index.html',**locals())
+@app.route('/register',methods=['POST','GET'])
+def user_register():
+    return render_template('register.html', **locals())
+@app.route('/login',methods=['POST','GET'])
+def user_login():
+    userid = request.cookies.get("userid")
+    if userid==None:#未登录
+        return render_template('login.html',**locals())
 
 @app.route('/user/<int:id>')
 def UserId(id):
     sql = "SELECT * FROM `ytuwind`.`yw_users` WHERE `id` = '"+str(id)+"'"
-    user_data = SendSQL(sql)
+    user_data = SendSQL(sql)[0]
     print(user_data)
 
 

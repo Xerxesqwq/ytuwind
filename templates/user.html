@@ -5,10 +5,12 @@
     <title>用户</title>
 </head>
 <body>
-    <div class="">
-        <img src="{{ url_for('static',filename='static/img/default.jpg') }}" alt="默认头像">
-        <label >{{user_data[0}}</label>
+    <div class="" style="background: aquamarine" >
+        <img height="150px" width="150px" src="{{ url_for('static',filename='/img/default.jpg') }}" alt="默认头像">
     </div>
+        <label>昵称：{{user_data[1]}}</label><br>
+        <label>学号：{{user_data[4]}}</label>
+
 
 
 </body>

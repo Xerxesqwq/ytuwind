@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>注册页面</title>
+        <meta charset="utf-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-touch-fullscreen" content="yes">
+        <meta http-equiv="Access-Control-Allow-Origin" content="*">
+        <link href="{{ url_for('static',filename='css/register.css') }}" type="text/css" rel="stylesheet">
+        <link href="{{ url_for('static',filename='css/global.css') }}" type="text/css" rel="stylesheet">
+        <script type="text/javascript" src="{{ url_for('static',filename='js/register.js') }}"></script>
+    </head>
+    <body>
+        <div id="layout">
+            <span>烟园账号注册</span>
+            <form  method="post">
+            <ul>
+                <p id="err_msg"></p>
+                <li><i class="un"><img src="{{ url_for('static',filename='images/user_name.png') }}"></i><input class="username" type="text" placeholder="请输入用户名" /></li>
+                <li>
+                    <i class="un"><img src="{{ url_for('static',filename='images/.png') }}"></i>
+                    <input class="username" type="text" placeholder="请输入学号" />
+                </li>
+                <li>
+                    <i class="un"><img src="{{ url_for('static',filename='images/.png') }}"></i>
+                    <input class="username" type="text" placeholder="请输入您所在学院" />
+                </li>
+                <li>
+                    <i class="un"><img src="{{ url_for('static',filename='images/.png') }}"></i>
+                    <input class="username" type="text" placeholder="请输入您的专业" />
+                </li>
+                <li>
+                    <i class="un"><img src="{{ url_for('static',filename='images/.png') }}"></i>
+                    <input class="username" type="text" placeholder="请输入班级" />
+                </li>
+                <li><i class="pw"><img src="{{ url_for('static',filename='images/pwd.png') }}"></i><input class="pwd" type="password" placeholder="请输入密码" /></li>
+                <li><i class="pw2"><img src="{{ url_for('static',filename='images/pwd.png') }}"></i><input class="pwd2" type="password" placeholder="请输入确认密码" /></li>
+                <div class="queren"><input class="fx" type="checkbox" checked="checked" /><p>我已阅读并同意<a href="{{url_for('static',filename='text/agreement.html')}}">《用户协议》</a></p></div>
+            </ul>
+                <div class="reg_btn">
+                    <button class="submit" type="submit">注册</button>
+                    <a href="login"><div class="reg-login"><p>已有帐号，立即登陆</p></div></a>
+                </div>
+            </form>
+        </div>
+    </body>
+
+</html>
+<script>
+
+</script>
