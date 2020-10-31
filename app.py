@@ -8,7 +8,7 @@ import pymysql
 app = Flask(__name__)
 
 # 打开数据库连接
-db = pymysql.connect("localhost", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
+db = pymysql.connect("112.124.21.126", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
 def SetCookie(fun,cookiename,cookietext,alivetime):
     response = redirect(url_for(fun))
     response.set_cookie(cookiename, cookietext,max_age=alivetime)  # set_cookie视图会在生成的响应报文首部中创建一个Set-Cookie字段,即"Set-Cookie: name=xxx;Path=/"
@@ -165,4 +165,4 @@ def softfunction(function):
         return response
 
 if __name__ == '__main__':
-    app.run(host="10.22.231.66")
+    app.run()
