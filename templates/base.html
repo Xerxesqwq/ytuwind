@@ -1,12 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <title>{% block title%}{% endblock %}————烟园，烟台学子自己的生活社区</title>
+    <title>{{title}}</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/hui.css') }}" />
 
 </head>
 <body>
     {% include "top.html" %}
-
+    {% include "notice.html" %}
+    {% block conntent %}
+    {% endblock %}
+    {% include "bottom.html" %}
 </body>
 </html>
+<script type="text/javascript">
+//创建窗口
+function createWin(){
+	var view = hui.create('./demo/h5createwindow.html',{},true,{name:'hcoder', age:'3.0'});
+	console.log(JSON.stringify(view));
+	hui.toast('窗口创建成功 ^_^');
+	//hui.create()函数返回创建的窗口对象，默认只是创建窗口并不展示【即为预加载】，使用show方法可以打开窗口
+	//plus.webview.show(view);
+}
+</script>
+<script src="{{ url_for('static',filename='js/hui.js') }}" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='js/hui-accordion.js') }}"></script>
+<script type="text/javascript">
+hui.ready(function(){
+    hui.accordion(true, true);
+	//hui('#nav-my').pointMsg();
+	//hui('#nav-news').pointMsg('hot', null, null, null, '1px');
+	//hui('#nav-forum').pointMsg(8);
+});
+</script>

@@ -14,8 +14,12 @@
     </head>
     <body>
         <div class="login">
-            <div class="login-title"><p>烟园登录</p>
-                <i></i>
+            <div class="login-title">
+                <p>烟园登录</p>
+
+            </div>
+            <div >
+                <i id="err_msg"></i>
             </div>
             <form method="post" action="login">
             <div class="login-bar">
@@ -35,3 +39,25 @@
 
     </body>
 </html>
+<script>
+    function toindex()
+    {
+        window.location.href="/index"
+    }
+    a = document.getElementById('err_msg');
+    console.log("{{messagetext}}")
+    if("{{messagetext}}"!="")
+    {
+
+        a.innerText="{{messagetext}}";
+
+    }
+    if("{{messagetext}}"=="登录成功")
+    {
+        console.log("登录成功")
+        a.innerText="登录成功,3秒后跳转至登录界面";
+        setTimeout("toindex()","2500");
+
+    }
+
+</script>

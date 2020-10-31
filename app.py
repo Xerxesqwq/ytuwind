@@ -1,24 +1,25 @@
 import flask
-from flask import Flask,render_template,request,make_response,redirect,url_for
+from flask import Flask,render_template,request,make_response,redirect,url_for,Response
 import os
 import urllib3
 import requests
+
 import pymysql
 app = Flask(__name__)
 
 # 打开数据库连接
 db = pymysql.connect("localhost", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
 def SetCookie(cookiename,cookietext,alivetime):
-    if alivetime == None :
-        alivetime = 3600
-    resp = make_response("set cookie success")  # 设置响应体
-    resp.set_cookie(cookiename, cookietext, max_age=alivetime)
-    return resp
+
+    response = Response('Set Cookie')
+
+    response.set_cookie(cookiename, cookietext)  # set_cookie视图会在生成的响应报文首部中创建一个Set-Cookie字段,即"Set-Cookie: name=xxx;Path=/"
+    return response
 def GetCookie(cookiename):
     cookie_1 = request.cookies.get(cookiename)  # 获取名字为cookiename对应cookie的值
     return cookie_1
 def DeleteCookie(cookiename):
-    resp = make_response("delete cookie success")
+    resp = Response("delete cookie")
     resp.delete_cookie(cookiename)
     return resp
 
@@ -42,17 +43,34 @@ def SendSQL(sql):
 ID默认为6位
 '''
 def RegisteredUsers(username,password,realname,studentnum,college,major,headimageurl,phonenum,classnum):
-    sql = "INSERT INTO `ytuwind`.`yw_users`(`username`, `password`, `realname`, `studentsnum`, `college`, `major`, `headimageurl`, `phonenum`, `classnum`) " \
-          "VALUES ("+username+", '"+password+"', '"+realname+"', '"+studentnum+"', '"+college+"', '"+major+"', '"+headimageurl+"', '"+phonenum+"', "+classnum+")"
+    arry = []
+    arry.append(-1)
+    arry.append(-1)
+    arry.append('')
+    iskong = SendSQL("SELECT * FROM `ytuwind`.`yw_users` WHERE `username` = '"+username+"' ")
+    print(iskong)
+    if str(iskong) != "()":
+        arry[0] = 2
+        arry[2]="用户名重复"
+        print("用户名重复")
+        return arry
+    sql = \
+        "INSERT INTO `ytuwind`.`yw_users`(`username`, `password`, `realname`, `studentsnum`, `college`, `major`, `headimageurl`, `phonenum`, `classnum`, `QQnum`) " \
+        "VALUES ('"+username+"', '"+password+"', '"+realname+"', '"+studentnum+"', '"+college+"', '"+major+"', '"+headimageurl+"', '"+phonenum+"', "+str(classnum)+", '')"
     res = SendSQL(sql)
-    id = SendSQL("SELECT * FROM `ytuwind`.`yw_users` WHERE `username` = '1111' ")
     if res == 1:
         print("注册成功")
-        return idhjm
     if res == -1:
+        arry[2]=("注册失败")
         print("注册失败")
-        return -1
+        return arry
 
+    id = SendSQL("SELECT * FROM `ytuwind`.`yw_users` WHERE `username` = '" + username + "' ")[0][0]
+    print(id)
+    arry[0]=(res)
+    arry[1]=(id)
+    arry[2]=("注册成功")
+    return arry
 '''
 判断是否为登录状态
 '''
@@ -63,6 +81,7 @@ def IfLogin():
         return False
     else:
         return True
+
 def RFG(name):#request.form.get
     return request.form.get(name)
 @app.route('/')
@@ -70,43 +89,80 @@ def RFG(name):#request.form.get
 def index():
     if IfLogin() == False:
         return redirect(url_for('user_login'))
-
+    title = "首页"
+    userid = request.cookies.get('userid')
     return render_template('index.html',**locals())
 @app.route('/register',methods=['POST','GET'])
 def user_register():
-    if request.method=='POST':
+    if request.method == 'POST':
         username = RFG('username')
         password = RFG('password')
         #messagetext
         realname = RFG('realname')
         studentnum = RFG('studentnum')
-        college =RFG('college')
-        major= RFG('major')
-        headimageurl = url_for('static',filename = "img/default.jpg")
+        college = RFG('college')
+        major = RFG('major')
+        headimageurl = "/img/default.jpg"
         phonenum = RFG('phonenum')
-        classnum = RFG('classnum')
-
-        userid = RegisteredUsers(username,password,realname,studentnum,college,major,headimageurl,phonenum,classnum)
-        if userid == -1:
-            messagetext = "注册失败，请尝试重新注册，如果不行，请及时联系管理员"
+        classnum = int(RFG('classnum'))
+        # print(request.form.items())
+        print(username,password,realname,studentnum,college,major,headimageurl,phonenum,classnum)
+        res = RegisteredUsers(username,password,realname,studentnum,college,major,headimageurl,phonenum,classnum)
+        userid = res[1]
+        messagetext = res[2]
+        if res[0]==-2:
+            messagetext = "注册失败，请及时联系管理员检查问题。"
     return render_template('register.html', **locals())
 @app.route('/login',methods=['POST','GET'])
 def user_login():
-    userid = request.cookies.get("userid")
-    if userid==None:#未登录
-        return render_template('login.html',**locals())
-    else:#已登录
-        return render_template('index.html',**locals())
+    if request.method=='POST':
+        username = RFG('username')
+        password = RFG('password')
+        sql = "SELECT * FROM `ytuwind`.`yw_users` WHERE `username` = '"+username+"' AND `password` = '"+password+"'"
+        res = SendSQL(sql)
+        print(res)
+        if str(res)=="()":
+            #登录失败
+            messagetext="账号或密码错误"
+            print("登录失败")
+            return render_template('login.html',**locals())
+        else:
+            userid= res[0][0]
+            print(userid)
+            response = redirect(url_for('index'))
 
-@app.route('/user/<int:id>')
+            response.set_cookie('username', username, max_age=3600)
+            response.set_cookie('userid', str(userid), max_age=3600)
+            return response
+    else :
+        userid = request.cookies.get("userid")
+        if userid==None:#未登录
+            return render_template('login.html',**locals())
+        else:#已登录
+            title = "首页"
+            return render_template('index.html',**locals())
+
+
+@app.route('/user/<id>')
 def UserId(id):
+    if IfLogin() == False:
+        return redirect(url_for('user_login'))
+    title = "我的"
     sql = "SELECT * FROM `ytuwind`.`yw_users` WHERE `id` = '"+str(id)+"'"
     user_data = SendSQL(sql)[0]
     print(user_data)
-
+    userid=user_data[0]
+    username = user_data[1]
 
 
     return render_template('user.html',**locals())
 
+@app.route('/function/<function>')
+def softfunction(function):
+    if function == 'exitlogin':
+        DeleteCookie('userid')
+        DeleteCookie('username')
+        return redirect(url_for('user_login'))
+
 if __name__ == '__main__':
-    app.run(host="192.168.3.32")
+    app.run(host="10.22.231.66")

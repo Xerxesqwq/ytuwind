@@ -60,5 +60,24 @@
 
 </html>
 <script>
-    a = document.getElementById('err_msg').innerText="{{messagetext}}";
+    function tologin()
+    {
+        window.location.href="/login"
+    }
+    a = document.getElementById('err_msg');
+    console.log("{{messagetext}}")
+    if("{{messagetext}}"!="")
+    {
+
+        a.innerText="{{messagetext}}";
+
+    }
+    if("{{messagetext}}"=="注册成功")
+    {
+        console.log("注册成功")
+        a.innerText="注册成功,3秒后跳转至登录界面";
+        setTimeout("tologin()","2500");
+
+    }
+
 </script>

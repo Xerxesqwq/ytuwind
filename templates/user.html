@@ -1,17 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>用户</title>
-</head>
-<body>
-    <div class="" style="background: aquamarine" >
-        <img height="150px" width="150px" src="{{ url_for('static',filename='/img/default.jpg') }}" alt="默认头像">
+{% extends "base.html" %}
+
+
+{% block conntent %}
+<div class="hui-wrap">
+    <div class="hui-list" style="background:#FFFFFF; margin-top:28px;">
+        <a href="javascript:hui.toast('Hello Hcoder UI !');" style="height:auto; height:80px; padding-bottom:8px;">
+    		<div class="hui-list-icons" style="width:110px; height:80px;">
+    			<img src="{{url_for('static',filename=user_data[7])}}" style="width:66px; margin:0px; border-radius:50%;">
+    		</div>
+    		<div class="hui-list-text" style="height:79px; line-height:79px;">
+    			<div class="hui-list-text-content">
+    				{{user_data[1]}} <!-用户名-->
+    			</div>
+    			<div class="hui-list-info">
+    				<span class="hui-icons hui-icons-right"></span>
+    			</div>
+    		</div>
+    	</a>
+    	<a href="javascript:hui.toast('Hello Hcoder UI !');">
+    		<div class="hui-list-text">
+    			<i>姓名：{{user_data[3]}}</i>  | <i>学号 : {{user_data[4]}}</i>
+    		</div>
+    	</a>
     </div>
-        <label>昵称：{{user_data[1]}}</label><br>
-        <label>学号：{{user_data[4]}}</label>
+    <div class="hui-list" style="background:#FFFFFF; margin-top:28px;">
+        <ul>
+            <li>
+            	<a href="javascript:void(0);">
+            		<div class="hui-list-icons">
+		    			<img src="{{ url_for('static',filename='img/list/sc.png') }}">
+		    		</div>
+		    		<div class="hui-list-text">
+		    			我的收藏
+		    			<div class="hui-list-info">
+		    				<span class="hui-icons hui-icons-right"></span>
+		    			</div>
+		    		</div>
+            	</a>
+           	</li>
 
+            <li>
+            	<a href="javascript:void(0);">
+            		<div class="hui-list-icons">
+		    			<img src="{{ url_for('static',filename='img/list/lishi.png') }}">
+		    		</div>
+		    		<div class="hui-list-text">
+		    			我的足迹
+		    			<div class="hui-list-info">
+		    				<span class="hui-icons hui-icons-right"></span>
+		    			</div>
+		    		</div>
+            	</a>
+           	</li>
+           	<li>
+            	<a href="javascript:void(0);">
+            		<div class="hui-list-icons">
+		    			<img src="{{ url_for('static',filename='img/list/order.png') }}">
+		    		</div>
+		    		<div class="hui-list-text">
+		    			我的发布
+		    			<div class="hui-list-info">
+		    				<span class="hui-icons hui-icons-right"></span>
+		    			</div>
+		    		</div>
+            	</a>
+           	</li>
+           	<li>
+            	<a href="javascript:void(0);">
+            		<div class="hui-list-icons">
+		    			<img src="{{ url_for('static',filename='img/list/ht.png') }}">
+		    		</div>
+		    		<div class="hui-list-text">
+		    			我的任务
+		    			<div class="hui-list-info">
+		    				<span class="hui-icons hui-icons-right"></span>
+		    			</div>
+		    		</div>
+            	</a>
+           	</li>
+			<li>
+            	<a href="javascript:void(0);">
+            		<div class="hui-list-icons">
+		    			<img src="{{ url_for('static',filename='img/list/sz.png') }}">
+		    		</div>
+		    		<div class="hui-list-text">
+		    			设置
+		    			<div class="hui-list-info">
+		    				<span class="hui-icons hui-icons-right"></span>
+		    			</div>
+		    		</div>
+            	</a>
+           	</li>
+        </ul>
+    </div>
+    <div style="background:#FFFFFF; margin-top:28px;">
+        <button type="button" class="hui-button hui-button-large" onclick="exitlogin();">
+        	<span class="hui-icons hui-icons-logoff"></span>退出系统
+       	</button>
+    </div>
+</div>
+<script>
+	function exitlogin()
+	{
+		hui.toast('用户{{username}}已退出登录');
 
-
-</body>
-</html>
+		window.location.href="/function/exitlogin";
+	}
+</script>
+{% endblock %}

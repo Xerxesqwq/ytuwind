@@ -1,0 +1,22 @@
+
+<div id="hui-footer">
+    <a href="\index" id="nav-home">
+        <div class="hui-footer-icons hui-icons-home"></div>
+        <div class="hui-footer-text">首页</div>
+    </a>
+    <a href="javascript:hui.toast('广场');" id="nav-news">
+        <div class="hui-footer-icons hui-icons-news"></div>
+        <div class="hui-footer-text">广场</div>
+    </a>
+    <div style="width:20%; text-align:center;" class="hui-fl">
+        <img src="{{ url_for('static',filename='img/logo_footer.png') }}" height="44" />
+    </div>
+    <a href="javascript:hui.toast('消息');" id="nav-forum">
+        <div class="hui-footer-icons hui-icons-forum"></div>
+        <div class="hui-footer-text">消息</div>
+    </a>
+    <a href="\user\{{userid}}" id="nav-my">
+        <div class="hui-footer-icons hui-icons-my"></div>
+        <div class="hui-footer-text">我的</div>
+    </a>
+</div>
