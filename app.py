@@ -1,10 +1,9 @@
-import flask
 from flask import Flask,render_template,request,make_response,redirect,url_for,Response
-import os
-import urllib3
-import requests
-
 import pymysql
+
+host = 'localhost'
+port = 5000
+
 app = Flask(__name__)
 
 # 打开数据库连接
@@ -165,4 +164,4 @@ def softfunction(function):
         return response
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host=host, port=port)
