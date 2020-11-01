@@ -3,24 +3,42 @@
     <header class="hui-header">
         <div id="hui-back"></div>
         <h1>{{title}}</h1>
-        <button type="button" class="hui-button hui-button-small hui-danger hui-fl" style="margin:8px 5px; width: 100px;">发布</button>
+        <button type="button" onclick="onsubmit();" class="hui-button hui-button-small hui-danger hui-fl" style="margin:8px 5px; width: 100px;">发布</button>
     </header>
 
-    <div style="padding:50px;">
-		<div class="hui-segment" id="cate">
-			<a href="javascript:changeDom(1);" class="       hui-segment-active">失物招领</a>
-			<a href="javascript:changeDom(2);" class="      ">悬赏大厅</a>
-			<a href="javascript:changeDom(3);" class="      ">每日打卡</a>
-		</div>
-		<div id="domsIn" style="padding:20px; text-align:center;">新闻...</div>
-	</div>
-<script type="text/javascript">
-//点击切换函数可以根据实际业务需求编写业务代码
-function changeDom(index){
-	index--;
-	var html = ['新闻','音乐','视频'];
-	hui('#domsIn').html(html[index]+'...');
-	hui('#cate a').eq(index).addClass('hui-segment-active').siblings().removeClass('hui-segment-active');
-}
-</script>
+    <div style="padding:50px 0 0 0;">
+        <form class="hui-form" method="post">
+
+            <div class="hui-form-items">
+                <label class="">分类：</label>
+                <select name="class" class="hui-form-select">
+                    <option value="失物招领">失物招领</option>
+                    <option value="悬赏大厅">悬赏大厅</option>
+                    <option value="每日打卡">每日打卡</option>
+                    <option value="跳蚤市场">跳蚤市场</option>
+                    <option value="兼职市场">兼职市场</option>
+                </select>
+            </div>
+            <div class="hui-form-items">
+                <label class="">标题：</label>
+            <input name="title" class="hui-text">
+            </div>
+            <div class="hui-form-items">
+                <label class="">内容：</label>
+                <textarea  name="content" class="hui-form-textarea" style="height: 300px;"></textarea>
+            </div>
+            <div class="hui-form-items-title">
+                <label class="" >手机号：</label>
+            <input name="phonenum" class="hui-text">
+            </div>
+             <div class="hui-form-items">
+                <label class="">标题：</label>
+            <input name="title" class="hui-text">
+             </div>
+             <div class="hui-form-items">
+                <label class="">标题：</label>
+            <input name="title" class="hui-text">
+             </div>
+        </form>
+    </div>
 {% endblock %}

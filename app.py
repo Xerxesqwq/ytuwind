@@ -78,6 +78,12 @@ def IfLogin():
     else:
         return True
 
+def SearchFromDate(biao,item,key):
+    sql="SELECT * FROM `ytuwind`.`"+biao+"` WHERE `"+item+"` LIKE '%"+key+"%'"
+    res = SendSQL(sql)
+    return res
+
+
 def RFG(name):#request.form.get
     return request.form.get(name)
 @app.route('/')
