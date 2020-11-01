@@ -7,18 +7,6 @@ app = Flask(__name__)
 
 # 打开数据库连接
 
-def SetCookie(fun,cookiename,cookietext,alivetime):
-    response = redirect(url_for(fun))
-    response.set_cookie(cookiename, cookietext,max_age=alivetime)  # set_cookie视图会在生成的响应报文首部中创建一个Set-Cookie字段,即"Set-Cookie: name=xxx;Path=/"
-    return response
-def GetCookie(cookiename):
-    cookie_1 = request.cookies.get(cookiename)  # 获取名字为cookiename对应cookie的值
-    return cookie_1
-def DeleteCookie(fun,cookiename):
-    resp = redirect(url_for(fun))
-    resp.delete_cookie(cookiename)
-    return resp
-
 '''
 方法名：SendSQL()
 功能：执行SQL语句并返回执行结果
@@ -86,6 +74,7 @@ def SearchFromDate(biao,item,key):
 
 def RFG(name):#request.form.get
     return request.form.get(name)
+
 @app.route('/')
 @app.route('/index')
 def index():
