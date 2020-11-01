@@ -6,18 +6,14 @@
     {% include "notice.html" %}
 
 	<div class="hui-center-title" style="margin-top:0px;"><h1>{{res[1]}}</h1></div>
-    <div class="hui-content" style="padding:10px;">
-		{{res[2]}}
-	</div>
-    <div class="hui-content" style="padding:10px;">
-		手机号：{{res[3]}}
-	</div>
-    <div class="hui-content" style="padding:10px;">
-		QQ号：{{res[4]}}
-	</div>
+    <div class="hui-content" style="margin: 0px 0 0 0; padding:0px;">
+        <p>{{res[2]}}</p>
+
+        <p>楼主联系方式：</p><p>手机号：{{res[4]}}</p>
+		<p><a href="http://wpa.qq.com/msgrd?v=3&uin={{res[5]}}&site=qq&menu=yes">QQ号：{{res[5]}} （点击跳转QQ聊天）</a></p>
+    </div>
     <div class="hui-img-list" id="list2" style="padding:10px 5px;">
         <ul>
-
             <li>
                 <a href="javascript:hui.toast('hi...');">
                     <img src="{{ res[3] }}">

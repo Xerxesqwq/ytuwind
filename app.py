@@ -209,17 +209,17 @@ def new():
     userid = request.cookies.get('userid')
     print(userid)
     user_data = GetUserDateByUserId(userid)
+    username = user_data[1]
     title = "发布新帖子"
     if request.method == 'POST':
         data_title = RFG('title')
         data_content = RFG('content')
         data_phonenum = RFG('phonenum')
         data_qqnum = RFG('qqnum')
-        data_url = "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3084595651,1944183809&fm=26&gp=0.jpg"
-        sql = "INSERT INTO `ytuwind`.`lostandfound`(`title`, `content`, `imageurls`,`phonenum`,`qqnum`) VALUES ('"+data_title+"', '"+data_content+"', '"+data_url+"','"+data_phonenum+"','"+data_qqnum+"')"
+        data_url = url_for('static',filename='img/default_add.jpg')
+        sql = "INSERT INTO `ytuwind`.`lostandfound`(`title`, `content`, `imageurls`,`phonenum`,`qqnum`,`userid`,`username`) VALUES ('"+data_title+"', '"+data_content+"', '"+data_url+"','"+data_phonenum+"','"+data_qqnum+"','"+userid+"','"+username+"')"
         res = SendSQL(sql)
-        if str(res)=='()':
-            messagetext = "发布成功"
+        messagetext = "发布成功"
 
 
 
