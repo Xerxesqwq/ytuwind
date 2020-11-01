@@ -20,34 +20,34 @@
                 <p id="err_msg"></p>
 
                 <li><i class="un"><img src="{{ url_for('static',filename='images/user_name.png') }}"></i>
-                    <input name="username" class="username" type="text" placeholder="请输入用户名" />
+                    <input name="username" required="required" class="username" type="text" placeholder="请输入用户名" />
                 </li>
                 <li>
                     <i class="un"><img src="{{ url_for('static',filename='images/.png') }}"></i>
-                    <input class="username"  name="studentnum" type="text" placeholder="请输入学号" />
+                    <input class="username"  required="required" name="studentnum" type="text" placeholder="请输入学号" />
                 </li>
                 <li>
                     <i class="un"><img src="{{ url_for('static',filename='images/.png') }}"></i>
-                    <input class="username" name="college" type="text" placeholder="请输入您所在学院" />
+                    <input class="username" required="required" name="college" type="text" placeholder="请输入您所在学院" />
                 </li>
                 <li>
                     <i class="un"><img src="{{ url_for('static',filename='images/.png') }}"></i>
-                    <input class="username" name="realname" type="text" placeholder="请输入真实姓名" />
+                    <input class="username" required="required"  name="realname" type="text" placeholder="请输入真实姓名" />
                 </li>
                 <li>
                     <i class="un"><img src="{{ url_for('static',filename='images/.png') }}"></i>
-                    <input class="username" name="phonenum" type="text" placeholder="请输入您的手机号" />
+                    <input class="username" required="required" name="phonenum" type="text" placeholder="请输入您的手机号" />
                 </li>
                 <li>
                     <i class="un"><img src="{{ url_for('static',filename='images/.png') }}"></i>
-                    <input class="username" name="major" type="text" placeholder="请输入您的专业" />
+                    <input class="username" required="required" name="major" type="text" placeholder="请输入您的专业" />
                 </li>
                 <li>
                     <i class="un"><img src="{{ url_for('static',filename='images/.png') }}"></i>
-                    <input class="username" name="classnum" type="text" placeholder="请输入班级" />
+                    <input class="username" required="required" name="classnum" type="text" placeholder="请输入班级" />
                 </li>
-                <li><i class="pw"><img src="{{ url_for('static',filename='images/pwd.png') }}"></i><input class="pwd" name="password" type="password" placeholder="请输入密码" /></li>
-                <li><i class="pw2"><img src="{{ url_for('static',filename='images/pwd.png') }}"></i><input class="pwd2" name="password2" type="password" placeholder="请输入确认密码" /></li>
+                <li><i class="pw"><img src="{{ url_for('static',filename='images/pwd.png') }}"></i><input required="required" class="pwd" name="password" type="password" placeholder="请输入密码" /></li>
+                <li><i class="pw2"><img src="{{ url_for('static',filename='images/pwd.png') }}"></i><input required="required" class="pwd2" name="password2" type="password" placeholder="请输入确认密码" /></li>
                 <div class="queren"><input class="fx" type="checkbox" checked="checked" /><p>我已阅读并同意<a href="{{url_for('static',filename='text/agreement.html')}}">《用户协议》</a></p></div>
             </ul>
                 <div class="reg_btn">

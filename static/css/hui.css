@@ -334,6 +334,16 @@ input[type="month"].hui-picker-valued:before,input[type="date"].hui-picker-value
 @-o-keyframes hui-a-menu-hide{0%{right:0%;} 100%{right:-70%}}
 .hui-slide-menu-hide{-webkit-animation:hui-a-menu-hide 0.3s forwards; animation:hui-a-menu-hide 0.3s forwards;}
 /* img cuter */
+.hui-img-cuter{width:100%; position:absolute; left:0; top:44px; z-index:2; background:rgb(255,255,255,0);}
+.hui-img-cuter-img{width:100%; overflow:hidden; font-size:0;}
+.hui-img-cuter-img img{width:100%;}
+.hui-img-cuter-canvas{position:fixed; z-index:3; top:100px; right:10px; width:100px; border:1px solid #FFFFFF; font-size:0px;}
+.hui-img-cuter-canvas canvas{width:100%;}
+.hui-img-cuter-select{width:100; overflow:hidden; text-align:center; background:#F4F5F6; position:relative;}
+.hui-img-cuter-file{width:100%; height:500px; background:rgba(255, 255, 255, 0); filter:Alpha(opacity=0); opacity:0; font-size:0px; position:absolute; z-index:1; left:0; top:0;}
+.hui-img-cuter-t1{line-height:100px; padding-top:50px; font-size:100px; color:#B8BBBF;}
+.hui-img-cuter-t2{line-height:50px; padding-bottom:30px; font-size:16px; color:#B8BBBF;}
+
 #hui-img-cuter{width:100%; position:absolute; left:0; top:44px; z-index:2; background:rgb(255,255,255,0);}
 #hui-img-cuter-img{width:100%; overflow:hidden; font-size:0;}
 #hui-img-cuter-img img{width:100%;}
@@ -341,7 +351,7 @@ input[type="month"].hui-picker-valued:before,input[type="date"].hui-picker-value
 #hui-img-cuter-canvas canvas{width:100%;}
 #hui-img-cuter-select{width:100; overflow:hidden; text-align:center; background:#F4F5F6; position:relative;}
 #hui-img-cuter-file{width:100%; height:500px; background:rgba(255, 255, 255, 0); filter:Alpha(opacity=0); opacity:0; font-size:0px; position:absolute; z-index:1; left:0; top:0;}
-#hui-img-cuter-t1{line-height:100px; padding-top:50px; font-size:100px; color:#B8BBBF;}
+#{line-height:100px; padding-top:50px; font-size:100px; color:#B8BBBF;}
 #hui-img-cuter-t2{line-height:50px; padding-bottom:30px; font-size:16px; color:#B8BBBF;}
 /* header search */
 #hui-header-sreach{width:100%; border-radius:5px; height:32px; margin:6px; display:flex; background:#FFFFFF;}

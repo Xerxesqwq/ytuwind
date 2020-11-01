@@ -92,7 +92,7 @@ def index():
     if IfLogin() == False:
         return redirect(url_for('user_login'))
     else:
-        userid = RFG('userid')
+        userid = request.cookies.get('userid')
     title = "首页"
     userid = request.cookies.get('userid')
     return render_template('index.html',**locals())
@@ -146,6 +146,10 @@ def user_login():
             title = "首页"
             return render_template('index.html',**locals())
 
+def GetUserDateByUserId(userid):
+    sql = "SELECT * FROM `ytuwind`.`yw_users` WHERE `id` = '" + str(userid) + "'"
+    user_data = SendSQL(sql)[0]
+    return user_data
 @app.route('/user',methods=['GET'])
 def UserId():
     if request.method=='GET':
@@ -154,8 +158,7 @@ def UserId():
         userid = request.cookies.get('userid')
     print(userid)
     title = "我的"
-    sql = "SELECT * FROM `ytuwind`.`yw_users` WHERE `id` = '"+str(userid)+"'"
-    user_data = SendSQL(sql)[0]
+    user_data = GetUserDateByUserId(userid)
     print(user_data)
     userid=user_data[0]
     username = user_data[1]
@@ -168,7 +171,7 @@ def softfunction(function):
     if IfLogin() == False:
         return redirect(url_for('user_login'))
     else:
-        userid = RFG('userid')
+        userid = request.cookies.get('userid')
     if function == 'exitlogin':
 
         response = redirect(url_for('user_login'))
@@ -180,7 +183,7 @@ def lostandfound():
     if IfLogin() == False:
         return redirect(url_for('user_login'))
     else:
-        userid = RFG('userid')
+        userid = request.cookies.get('userid')
     title = "失物招领中心"
     lostandfoundtasts = SendSQL("SELECT * FROM `ytuwind`.`lostandfound`")
     print(lostandfoundtasts)
@@ -190,7 +193,7 @@ def lostandfoundtasts_id(id):
     if IfLogin() == False:
         return redirect(url_for('user_login'))
     else:
-        userid=RFG('userid')
+        userid=request.cookies.get('userid')
     res = SendSQL("SELECT * FROM `ytuwind`.`lostandfound` WHERE `id` = '"+id+"' ")[0]
     print(res)
     title = "失物招领中心"
@@ -199,26 +202,39 @@ def lostandfoundtasts_id(id):
     else:
         return render_template('lostandfound.html', **locals())
 
-@app.route('/new')
+@app.route('/new',methods=['POST','GET'])
 def new():
     if IfLogin() == False:
         return redirect(url_for('user_login'))
-    else:
-        userid=RFG('userid')
-    title =  "发布新帖子"
+    userid = request.cookies.get('userid')
+    print(userid)
+    user_data = GetUserDateByUserId(userid)
+    title = "发布新帖子"
+    if request.method == 'POST':
+        data_title = RFG('title')
+        data_content = RFG('content')
+        data_phonenum = RFG('phonenum')
+        data_qqnum = RFG('qqnum')
+        data_url = "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3084595651,1944183809&fm=26&gp=0.jpg"
+        sql = "INSERT INTO `ytuwind`.`lostandfound`(`title`, `content`, `imageurls`,`phonenum`,`qqnum`) VALUES ('"+data_title+"', '"+data_content+"', '"+data_url+"','"+data_phonenum+"','"+data_qqnum+"')"
+        res = SendSQL(sql)
+        if str(res)=='()':
+            messagetext = "发布成功"
+
+
+
     return render_template('new.html',**locals())
 @app.route('/changeheadimg')
 def changeheadimg():
     if IfLogin() == False:
         return redirect(url_for('user_login'))
     else:
-        userid=RFG('userid')
+        userid=request.cookies.get('userid')
     title = "修改头像"
     return render_template('changeheadimg.html',**locals())
 
 # db = pymysql.connect("localhost", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
 db = pymysql.connect("112.124.21.126", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
-print(db)
 if __name__ == '__main__':
     sysstr = platform.system()
     if (sysstr == "Windows"):
@@ -226,7 +242,6 @@ if __name__ == '__main__':
     elif (sysstr == "Linux"):
         app.debug = False
     if (app.debug == True):
-        app.run('0.0.0.0' , port=8000)
+        app.run('0.0.0.0', port=80)
     else:
-
         app.run('0.0.0.0', port=5000)

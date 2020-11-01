@@ -3,7 +3,7 @@
     <header class="hui-header">
         <div id="hui-back"></div>
         <h1>{{title}}</h1>
-        <button type="button" onclick="onsubmit();" class="hui-button hui-button-small hui-danger hui-fl" style="margin:8px 5px; width: 100px;">发布</button>
+        <button type="button" onclick="formsubmit();" class="hui-button hui-button-small hui-danger hui-fl" style="margin:8px 5px; width: 100px;">发布</button>
     </header>
 
     <div style="padding:50px 0 0 0;">
@@ -21,25 +21,80 @@
             </div>
             <div class="hui-form-items">
                 <label class="">标题：</label>
-            <input name="title" class="hui-text">
+                <input required="required" name="title" class="hui-text">
             </div>
             <div class="hui-form-items">
                 <label class="">内容：</label>
-                <textarea  name="content" class="hui-form-textarea" style="height: 300px;"></textarea>
+                <textarea required="required" name="content" class="hui-form-textarea" style="height: 200px;"></textarea>
             </div>
-            <div class="hui-form-items-title">
+            <div class="hui-form-items">
                 <label class="" >手机号：</label>
-            </div>
-            <input name="phonenum" class="hui-text">
+                <input required="required" name="phonenum" value="{{phonenum}}" class="hui-text">
             </div>
              <div class="hui-form-items">
-                <label class="">标题：</label>
-            <input name="title" class="hui-text">
+                <label class="">QQ号：</label>
+                <input required="required" name="qqnum" value="{{qqnum}}" class="hui-text">
              </div>
-             <div class="hui-form-items">
-                <label class="">标题：</label>
-            <input name="title" class="hui-text">
+            <div class="hui-form-items">
+                <label class="">添加图片：</label>
+
+                <div id="hui-img-cuter-select">
+                    <img id="img-show" style="display: none" src="">
+                <div id="hui-img-cuter-t1">+</div>
+                <div id="hui-img-cuter-t2">请选择图片</div>
+                <input type="file"  accept="image/*" id="hui-img-cuter-file"></div>
+
              </div>
+
+            <button id="mybtn" style="display: none" type="submit">发布</button>
         </form>
     </div>
+<script>
+    if("{{messagetext}}"!="")
+    {
+        hui.iconToast("{{messagetext}}", "success");
+    }
+    function formsubmit()
+    {
+        a=document.getElementsByTagName('input');
+        for (i in a)
+        {
+            if(i.value=="")
+            {
+                window.alert("不能为空！");
+                break;
+            }
+        }
+        document.getElementById('mybtn').click();
+    }
+</script>
+<script type="text/javascript">
+/*
+huiImgCuter 参数
+1. 宽度和高度的比例 高度 / 宽度 默认 1
+2. 最终保存图片的宽度 默认 200px 高度根据宽高比自动调整
+*/
+var cuter = new huiImgCuter();
+//绑定底部的选择按钮
+cuter.bindSelect("#mybtn");
+//保存照片
+hui('#uploadBtn').click(function(){
+	//获取图片数据
+	var imgData = cuter.getImgData();
+	if(!imgData){hui.toast('请选择图片'); return;}
+	hui.loading('上传图片...');
+	/*
+	//上传到服务端演示代码
+    hui.post(
+        'http://192.168.31.188/uper.php',
+        {img:imgData},
+        function(data){
+            hui.closeLoading();
+            hui.toast('上传成功!');
+        }
+    );
+    */
+    setTimeout(function(){hui.toast('上传成功，演示的！'); hui.closeLoading();}, 2000);
+});
+</script>
 {% endblock %}
