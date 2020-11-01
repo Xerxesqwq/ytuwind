@@ -193,9 +193,17 @@ def lostandfoundtasts_id(id):
     else:
         return render_template('lostandfound.html', **locals())
 
+@app.route('/new')
+def new():
+    if IfLogin() == False:
+        return redirect(url_for('user_login'))
+    else:
+        userid=RFG('userid')
+    title =  "发布"
 
-db = pymysql.connect("localhost", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
-# db = pymysql.connect("112.124.21.126", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
+# db = pymysql.connect("localhost", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
+db = pymysql.connect("112.124.21.126", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
+print(db)
 if __name__ == '__main__':
     sysstr = platform.system()
     if (sysstr == "Windows"):
@@ -203,7 +211,7 @@ if __name__ == '__main__':
     elif (sysstr == "Linux"):
         app.debug = False
     if (app.debug == True):
-        app.run('127.0.0.1',port=8000)
+        app.run('127.0.0.1' , port=8000)
     else:
 
         app.run('0.0.0.0', port=5000)
