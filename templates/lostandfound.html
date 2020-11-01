@@ -4,68 +4,20 @@
 {% block conntent %}
     {% include "top_back.html" %}
     {% include "notice.html" %}
-    <div class="hui-wrap">
-	<div class="hui-center-title" style="margin-top:22px;"><h1>媒体列表</h1></div>
-	<div class="hui-media-list" style="padding:10px;">
+
+	<div class="hui-center-title" style="margin-top:0px;"><h1>{{res[1]}}</h1></div>
+    <div class="hui-content" style="padding:10px;">
+		{{res[2]}}
+	</div>
+    <div class="hui-img-list" id="list2" style="padding:10px 5px;">
         <ul>
+
             <li>
                 <a href="javascript:hui.toast('hi...');">
-                    <div class="hui-media-list-img"><img src="../img/medialist/1.jpg"></div>
-                    <div class="hui-media-content">
-                        <h1>标题内容....</h1>
-                        <p>power by hcoder.net</p>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:hui.toast('hi...');">
-                    <div class="hui-media-list-img"><img src="../img/medialist/2.jpg"></div>
-                    <div class="hui-media-content">
-                        <h1>标题内容....</h1>
-                        <p>power by hcoder.net</p>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:hui.toast('hi...');">
-                    <div class="hui-media-list-img"><img src="../img/medialist/3.jpg"></div>
-                    <div class="hui-media-content">
-                        <h1>标题内容....</h1>
-                        <p>笑对人生，能穿透迷雾；笑对人生，能坚持到底；笑对人生，能化解危机；笑对人生，能照亮黑暗。</p>
-                    </div>
+                    <img src="{{ res[3] }}">
+
                 </a>
             </li>
         </ul>
     </div>
-    <div class="hui-center-title"><h1>混合排列</h1></div>
-    <div class="hui-media-list" style="padding:10px;">
-        <ul>
-            <li>
-                <a href="javascript:hui.toast('hi...');">
-                    <div class="hui-media-list-img hui-fr"><img src="../img/medialist/1.jpg"></div>
-                    <div class="hui-media-content hui-media-content-left">
-                        <h1>标题内容....</h1>
-                        <p>power by hcoder.net</p>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:hui.toast('hi...');">
-                    <div class="hui-media-content hui-media-content-left">
-                        <h1>标题内容....</h1>
-                        <p>power by hcoder.net</p>
-                    </div>
-                    <div class="hui-media-list-img"><img src="../img/medialist/2.jpg"></div>
-                </a>
-            </li>
-            <li>
-                <div class="hui-media-list-img"><img src="../img/medialist/3.jpg"></div>
-                <div class="hui-media-content">
-                    <h1>标题内容....</h1>
-                    <p>笑对人生，能穿透迷雾；笑对人生，能坚持到底；笑对人生，能化解危机；笑对人生，能照亮黑暗。</p>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
 {% endblock %}

@@ -85,6 +85,8 @@ def RFG(name):#request.form.get
 def index():
     if IfLogin() == False:
         return redirect(url_for('user_login'))
+    else:
+        userid = RFG('userid')
     title = "首页"
     userid = request.cookies.get('userid')
     return render_template('index.html',**locals())
@@ -138,13 +140,15 @@ def user_login():
             title = "首页"
             return render_template('index.html',**locals())
 
-
-@app.route('/user/<id>')
-def UserId(id):
-    if IfLogin() == False:
-        return redirect(url_for('user_login'))
+@app.route('/user',methods=['GET'])
+def UserId():
+    if request.method=='GET':
+        userid=RFG('userid')
+    if userid==None:
+        userid = request.cookies.get('userid')
+    print(userid)
     title = "我的"
-    sql = "SELECT * FROM `ytuwind`.`yw_users` WHERE `id` = '"+str(id)+"'"
+    sql = "SELECT * FROM `ytuwind`.`yw_users` WHERE `id` = '"+str(userid)+"'"
     user_data = SendSQL(sql)[0]
     print(user_data)
     userid=user_data[0]
@@ -155,16 +159,41 @@ def UserId(id):
 
 @app.route('/function/<function>')
 def softfunction(function):
+    if IfLogin() == False:
+        return redirect(url_for('user_login'))
+    else:
+        userid = RFG('userid')
     if function == 'exitlogin':
 
         response = redirect(url_for('user_login'))
         response.delete_cookie('userid')
         response.delete_cookie('username')
         return response
-@app.route('/lostandfound')
+@app.route('/lostandfoundtasts')
 def lostandfound():
+    if IfLogin() == False:
+        return redirect(url_for('user_login'))
+    else:
+        userid = RFG('userid')
     title = "失物招领中心"
-    return render_template('lostandfound.html',**locals())
+    lostandfoundtasts = SendSQL("SELECT * FROM `ytuwind`.`lostandfound`")
+    print(lostandfoundtasts)
+    return render_template('lostandfoundtasts.html',**locals())
+@app.route('/lostandfoundtasts/<id>')
+def lostandfoundtasts_id(id):
+    if IfLogin() == False:
+        return redirect(url_for('user_login'))
+    else:
+        userid=RFG('userid')
+    res = SendSQL("SELECT * FROM `ytuwind`.`lostandfound` WHERE `id` = '"+id+"' ")[0]
+    print(res)
+    title = "失物招领中心"
+    if str(res)=="()":
+        errortext = "未知错误"
+    else:
+        return render_template('lostandfound.html', **locals())
+
+
 
 if __name__ == '__main__':
     sysstr = platform.system()

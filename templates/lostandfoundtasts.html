@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+
+{% block conntent %}
+    {% include "top_back.html" %}
+    {% include "notice.html" %}
+    <div class="hui-wrap">
+	<!--
+	<div class="hui-center-title" style="margin-top:22px;"><h1>媒体列表</h1></div>
+    -->
+    {% for i in lostandfoundtasts %}
+	<div class="hui-media-list" style="padding:10px;">
+        <ul>
+            <li>
+                <a href="/lostandfoundtasts/{{i[0]}}">
+                    <div class="hui-media-list-img"><img src="{{ i[3] }}"></div>
+                    <div class="hui-media-content">
+                        <h1>{{ i[1] }}</h1>
+                        <p>{{ i[2] }}</p>
+                    </div>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+        {% endfor %}
+
+</div>
+{% endblock %}
