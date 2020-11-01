@@ -1,23 +1,26 @@
 {% extends "base.html" %}
 {% block conntent %}
-    {% include "top_back.html" %}
-    {% include "notice.html" %}
+    <header class="hui-header">
+        <div id="hui-back"></div>
+        <h1>{{title}}</h1>
+        <button type="button" class="hui-button hui-button-small hui-danger hui-fl" style="margin:8px 5px; width: 100px;">发布</button>
+    </header>
 
-    <div id="hui-black-mask" class="       " style="display: none;">
-	<!-- 发布 -->
-	<div id="hui-black-mask-content">
-		<div id="hui-black-action" class="       " style="top: 0px; display: none;">
-			<div id="hui-black-close"></div>
+    <div style="padding:50px;">
+		<div class="hui-segment" id="cate">
+			<a href="javascript:changeDom(1);" class="       hui-segment-active">失物招领</a>
+			<a href="javascript:changeDom(2);" class="      ">悬赏大厅</a>
+			<a href="javascript:changeDom(3);" class="      ">每日打卡</a>
 		</div>
-		<div style="text-align:center;">
-            <form method="post" action="new.html">
-
-            </form>
-        </div>
-		<div style="text-align:center; color:#FFFFFF; line-height:60px;">
-			一个演示广告
-		</div>
+		<div id="domsIn" style="padding:20px; text-align:center;">新闻...</div>
 	</div>
-
-</div>
+<script type="text/javascript">
+//点击切换函数可以根据实际业务需求编写业务代码
+function changeDom(index){
+	index--;
+	var html = ['新闻','音乐','视频'];
+	hui('#domsIn').html(html[index]+'...');
+	hui('#cate a').eq(index).addClass('hui-segment-active').siblings().removeClass('hui-segment-active');
+}
+</script>
 {% endblock %}

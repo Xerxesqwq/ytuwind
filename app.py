@@ -199,7 +199,16 @@ def new():
         return redirect(url_for('user_login'))
     else:
         userid=RFG('userid')
-    title =  "发布"
+    title =  "发布新帖子"
+    return render_template('new.html',**locals())
+@app.route('/changeheadimg')
+def changeheadimg():
+    if IfLogin() == False:
+        return redirect(url_for('user_login'))
+    else:
+        userid=RFG('userid')
+    title = "修改头像"
+    return render_template('changeheadimg.html',**locals())
 
 # db = pymysql.connect("localhost", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
 db = pymysql.connect("112.124.21.126", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
