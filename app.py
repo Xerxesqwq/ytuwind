@@ -6,7 +6,7 @@ import platform
 app = Flask(__name__)
 
 # 打开数据库连接
-db = pymysql.connect("112.124.21.126", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
+
 def SetCookie(fun,cookiename,cookietext,alivetime):
     response = redirect(url_for(fun))
     response.set_cookie(cookiename, cookietext,max_age=alivetime)  # set_cookie视图会在生成的响应报文首部中创建一个Set-Cookie字段,即"Set-Cookie: name=xxx;Path=/"
@@ -52,7 +52,7 @@ def RegisteredUsers(username,password,realname,studentnum,college,major,headimag
         return arry
     sql = \
         "INSERT INTO `ytuwind`.`yw_users`(`username`, `password`, `realname`, `studentsnum`, `college`, `major`, `headimageurl`, `phonenum`, `classnum`, `QQnum`) " \
-        "VALUES ('"+username+"', '"+password+"', '"+realname+"', '"+studentnum+"', '"+college+"', '"+major+"', '"+headimageurl+"', '"+phonenum+"', "+str(classnum)+", '')"
+        "VALUES ('"+username+"', '"+password+"', '"+realname+"', '"+studentnum+"', '"+college+"', '"+major+"', '"+headimageurl+"', '"+phonenum+"', '"+str(classnum)+"', '')"
     res = SendSQL(sql)
     if res == 1:
         print("注册成功")
@@ -102,7 +102,7 @@ def user_register():
         major = RFG('major')
         headimageurl = "/img/default.jpg"
         phonenum = RFG('phonenum')
-        classnum = int(RFG('classnum'))
+        classnum = (RFG('classnum'))
         # print(request.form.items())
         print(username,password,realname,studentnum,college,major,headimageurl,phonenum,classnum)
         res = RegisteredUsers(username,password,realname,studentnum,college,major,headimageurl,phonenum,classnum)
@@ -194,7 +194,8 @@ def lostandfoundtasts_id(id):
         return render_template('lostandfound.html', **locals())
 
 
-
+db = pymysql.connect("localhost", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
+# db = pymysql.connect("112.124.21.126", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
 if __name__ == '__main__':
     sysstr = platform.system()
     if (sysstr == "Windows"):
@@ -204,4 +205,5 @@ if __name__ == '__main__':
     if (app.debug == True):
         app.run('127.0.0.1',port=8000)
     else:
+
         app.run('0.0.0.0', port=5000)
