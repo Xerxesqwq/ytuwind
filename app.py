@@ -2,10 +2,25 @@ from flask import Flask,render_template,request,make_response,redirect,url_for,R
 import pymysql
 import os
 import platform
-
+import datetime
+import json
+import fun
 app = Flask(__name__)
+# db = pymysql.connect("localhost", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
+f = open('config.ini', 'r')
+config_text = f.read()
+f.close()
+
+config_json = json.loads(config_text)
+fun.log(config_json)
 
 # 打开数据库连接
+db = pymysql.connect(config_json['db_host'], config_json['db_user'], config_json['db_pass'], config_json['db_name'], charset='utf8')
+#读取外部配置
+app.debug = config_json['app_debug']
+
+
+
 
 '''
 方法名：SendSQL()
@@ -32,25 +47,25 @@ def RegisteredUsers(username,password,realname,studentnum,college,major,headimag
     arry.append(-1)
     arry.append('')
     iskong = SendSQL("SELECT * FROM `ytuwind`.`yw_users` WHERE `username` = '"+username+"' ")
-    print(iskong)
+    fun.log(iskong)
     if str(iskong) != "()":
         arry[0] = 2
         arry[2]="用户名重复"
-        print("用户名重复")
+        fun.log("用户名重复")
         return arry
     sql = \
         "INSERT INTO `ytuwind`.`yw_users`(`username`, `password`, `realname`, `studentsnum`, `college`, `major`, `headimageurl`, `phonenum`, `classnum`, `QQnum`) " \
         "VALUES ('"+username+"', '"+password+"', '"+realname+"', '"+studentnum+"', '"+college+"', '"+major+"', '"+headimageurl+"', '"+phonenum+"', '"+str(classnum)+"', '')"
     res = SendSQL(sql)
     if res == 1:
-        print("注册成功")
+        fun.log("注册成功")
     if res == -1:
         arry[2]=("注册失败")
-        print("注册失败")
+        fun.log("注册失败")
         return arry
 
     id = SendSQL("SELECT * FROM `ytuwind`.`yw_users` WHERE `username` = '" + username + "' ")[0][0]
-    print(id)
+    fun.log(id)
     arry[0]=(res)
     arry[1]=(id)
     arry[2]=("注册成功")
@@ -59,9 +74,9 @@ def RegisteredUsers(username,password,realname,studentnum,college,major,headimag
 判断是否为登录状态
 '''
 def IfLogin():
-    #print(request.cookies.get('user_name'))
+    #fun.log(request.cookies.get('user_name'))
     if request.cookies.get('userid') == None:
-        print("未登陆，请先登录")
+        fun.log("未登陆，请先登录")
         return False
     else:
         return True
@@ -74,6 +89,7 @@ def SearchFromDate(biao,item,key):
 
 def RFG(name):#request.form.get
     return request.form.get(name)
+
 
 @app.route('/')
 @app.route('/index')
@@ -98,8 +114,8 @@ def user_register():
         headimageurl = "/img/default.jpg"
         phonenum = RFG('phonenum')
         classnum = (RFG('classnum'))
-        # print(request.form.items())
-        print(username,password,realname,studentnum,college,major,headimageurl,phonenum,classnum)
+        # fun.log(request.form.items())
+        fun.log(username,password,realname,studentnum,college,major,headimageurl,phonenum,classnum)
         res = RegisteredUsers(username,password,realname,studentnum,college,major,headimageurl,phonenum,classnum)
         userid = res[1]
         messagetext = res[2]
@@ -113,19 +129,19 @@ def user_login():
         password = RFG('password')
         sql = "SELECT * FROM `ytuwind`.`yw_users` WHERE `username` = '"+username+"' AND `password` = '"+password+"'"
         res = SendSQL(sql)
-        print(res)
+        fun.log(res)
         if str(res)=="()":
             #登录失败
             messagetext="账号或密码错误"
-            print("登录失败")
+            fun.log("登录失败")
             return render_template('login.html',**locals())
         else:
             userid= res[0][0]
-            print(userid)
+            fun.log(userid)
             response = redirect(url_for('index'))
 
-            response.set_cookie('username', username, max_age=3600)
-            response.set_cookie('userid', str(userid), max_age=3600)
+            response.set_cookie('username', username, max_age=2592000)
+            response.set_cookie('userid', str(userid), max_age=2592000)
             return response
     else :
         userid = request.cookies.get("userid")
@@ -145,10 +161,10 @@ def UserId():
         userid=RFG('userid')
     if userid==None:
         userid = request.cookies.get('userid')
-    print(userid)
+    fun.log(userid)
     title = "我的"
     user_data = GetUserDateByUserId(userid)
-    print(user_data)
+    fun.log(user_data)
     userid=user_data[0]
     username = user_data[1]
 
@@ -175,7 +191,7 @@ def lostandfound():
         userid = request.cookies.get('userid')
     title = "失物招领中心"
     lostandfoundtasts = SendSQL("SELECT * FROM `ytuwind`.`lostandfound`")
-    print(lostandfoundtasts)
+    fun.log(lostandfoundtasts)
     return render_template('lostandfoundtasts.html',**locals())
 @app.route('/lostandfoundtasts/<id>')
 def lostandfoundtasts_id(id):
@@ -184,7 +200,7 @@ def lostandfoundtasts_id(id):
     else:
         userid=request.cookies.get('userid')
     res = SendSQL("SELECT * FROM `ytuwind`.`lostandfound` WHERE `id` = '"+id+"' ")[0]
-    print(res)
+    fun.log(res)
     title = "失物招领中心"
     if str(res)=="()":
         errortext = "未知错误"
@@ -196,7 +212,7 @@ def new():
     if IfLogin() == False:
         return redirect(url_for('user_login'))
     userid = request.cookies.get('userid')
-    print(userid)
+    fun.log(userid)
     user_data = GetUserDateByUserId(userid)
     username = user_data[1]
     title = "发布新帖子"
@@ -222,15 +238,21 @@ def changeheadimg():
     title = "修改头像"
     return render_template('changeheadimg.html',**locals())
 
-# db = pymysql.connect("localhost", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
-db = pymysql.connect("112.124.21.126", "ytuwind", "XC4djtPwCDjsfGZG", "ytuwind", charset='utf8' )
+def UploadFile(file_obj,file_path):
+    if file_path==None:
+        file_path='./'
+    if file_obj:
+        filename = str(datetime.datetime.timestamp(datetime.datetime.now())*1000000)+'.jpg'
+        f = open(file_path+filename, 'wb')
+        data = file_obj.read()
+        f.write(data)
+        f.close()
+        return True
+
 if __name__ == '__main__':
-    sysstr = platform.system()
-    if (sysstr == "Windows"):
-        app.debug = True
-    elif (sysstr == "Linux"):
-        app.debug = False
     if (app.debug == True):
-        app.run('0.0.0.0', port=80)
+        fun.log("http://127.0.0.1:5000")
+        app.run(config_json['app_host'], port=config_json['app_debug_port'])
     else:
-        app.run('0.0.0.0', port=5000)
+        app.run(config_json['app_host'], port=config_json['app_port'])
+
