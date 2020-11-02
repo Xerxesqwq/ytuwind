@@ -1,0 +1,144 @@
+
+
+<div id="hui-footer">
+    <a href="\index" id="nav-home">
+        <div class="hui-footer-icons hui-icons-home"></div>
+        <div class="hui-footer-text">首页</div>
+    </a>
+    <a href="javascript:hui.toast('广场');" id="nav-news">
+        <div class="hui-footer-icons hui-icons-news"></div>
+        <div class="hui-footer-text">广场</div>
+    </a>
+
+    <div style="width:15%; text-align:center;" class="hui-fl">
+        <a href="\new">
+            <img src="./static/img/icon/logo.png" height="44" />
+        </a>
+    </div>
+
+    <a href="javascript:hui.toast('消息');" id="nav-forum">
+        <div class="hui-footer-icons hui-icons-forum"></div>
+        <div class="hui-footer-text">消息</div>
+    </a>
+    <a href="\user?userid=24" id="nav-my">
+        <div class="hui-footer-icons hui-icons-my"></div>
+        <div class="hui-footer-text">我的</div>
+    </a>
+</div><!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="./static/css/hui.css" />
+
+</head>
+<body>
+
+
+    
+    
+<header class="hui-header">
+    <div id="hui"></div>
+    <h1>首页</h1>
+</header>
+    <div style="background:#FFF; padding:44px 20px 0 0; margin:0px 0px 0px 0px;" class="hui-flex">
+		<div style="height:46px; width:20px;">
+			<img src="./static/img/spiker.png" width="20" style="margin-left: 5px; padding:13px 0px;">
+		</div>
+		<div class="hui-scroll-news" id="scrollnew1">
+
+		<div class="hui-scroll-news-items        hui-scroll-news-h0">欢迎注册成为烟园APP测试用户</div>
+            <div class="hui-scroll-news-items     ">若您有好的想法 联系QQ：1515518552</div>
+        </div>
+	</div>
+    <div class="hui-speed-dial">
+		<ul>
+            <li>
+                <a href="/lostandfoundtasts">
+                <div class="hui-speed-dial-icons">
+                    <span class="hui-icons"><img style="height:40px;" src="./static/img/icon/%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86.png"></span>
+                </div>
+                    <div class="hui-speed-dial-text">失物招领</div>
+                </a>
+
+            </li>
+            <li>
+                <a href="">
+                <div class="hui-speed-dial-icons">
+                    <span class="hui-icons"><img  style="height:40px;" src="./static/img/icon/%E6%82%AC%E8%B5%8F%E5%A4%A7%E5%8E%85.png"></span>
+                </div>
+                <div class="hui-speed-dial-text">悬赏大厅</div>
+                </a>
+            </li>
+            <li>
+                <div class="hui-speed-dial-icons">
+                    <span class="hui-icons"><img  style="height:40px;" src="./static/img/icon/%E6%AF%8F%E6%97%A5%E6%89%93%E5%8D%A1.png"></span>
+                </div>
+                <div class="hui-speed-dial-text">每日打卡</div>
+            </li>
+            <li>
+                <div class="hui-speed-dial-icons">
+                    <span class="hui-icons"><img  style="height:40px;" src="./static/img/icon/%E8%B7%B3%E8%9A%A4%E5%B8%82%E5%9C%BA.png"></span>
+                </div>
+                <div class="hui-speed-dial-text">跳蚤市场</div>
+            </li>
+            <li>
+                <div class="hui-speed-dial-icons">
+                    <span class="hui-icons"><img  style="height:40px;" src="./static/img/icon/%E5%85%BC%E8%81%8C%E5%B8%82%E5%9C%BA.png"></span>
+                </div>
+                <div class="hui-speed-dial-text">兼职市场</div>
+            </li>
+        </ul>
+	</div>
+
+
+    
+<div id="hui-footer">
+    <a href="\index" id="nav-home">
+        <div class="hui-footer-icons hui-icons-home"></div>
+        <div class="hui-footer-text">首页</div>
+    </a>
+    <a href="javascript:hui.toast('广场');" id="nav-news">
+        <div class="hui-footer-icons hui-icons-news"></div>
+        <div class="hui-footer-text">广场</div>
+    </a>
+
+    <div style="width:15%; text-align:center;" class="hui-fl">
+        <a href="\new">
+            <img src="./static/img/icon/logo.png" height="44" />
+        </a>
+    </div>
+
+    <a href="javascript:hui.toast('消息');" id="nav-forum">
+        <div class="hui-footer-icons hui-icons-forum"></div>
+        <div class="hui-footer-text">消息</div>
+    </a>
+    <a href="\user?userid=24" id="nav-my">
+        <div class="hui-footer-icons hui-icons-my"></div>
+        <div class="hui-footer-text">我的</div>
+    </a>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+//创建窗口
+function createWin(){
+	var view = hui.create('./demo/h5createwindow.html',{},true,{name:'hcoder', age:'3.0'});
+	console.log(JSON.stringify(view));
+	hui.toast('窗口创建成功 ^_^');
+	//hui.create()函数返回创建的窗口对象，默认只是创建窗口并不展示【即为预加载】，使用show方法可以打开窗口
+	//plus.webview.show(view);
+}
+</script>
+<script src="./static/js/hui.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="./static/js/hui-accordion.js"></script>
+<script type="text/javascript">
+hui.ready(function(){
+    hui.accordion(true, true);
+	//hui('#nav-my').pointMsg();
+	//hui('#nav-news').pointMsg('hot', null, null, null, '1px');
+	//hui('#nav-forum').pointMsg(8);
+});
+</script>
