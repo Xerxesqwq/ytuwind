@@ -115,7 +115,7 @@ def user_register():
         phonenum = RFG('phonenum')
         classnum = (RFG('classnum'))
         # fun.log(request.form.items())
-        fun.log(username,password,realname,studentnum,college,major,headimageurl,phonenum,classnum)
+        #fun.log(username,password,realname,studentnum,college,major,headimageurl,phonenum,classnum)
         res = RegisteredUsers(username,password,realname,studentnum,college,major,headimageurl,phonenum,classnum)
         userid = res[1]
         messagetext = res[2]
